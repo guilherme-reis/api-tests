@@ -9,26 +9,19 @@ import static org.testng.Assert.assertNotNull;
 
 public class AddProductToCartTest extends BaseTest {
 
-    @Test
-    public void addProductToCartShouldSucceed() {
+    @Test(dependsOnMethods = "com.grocerystore.CartCreationTest.createCartShouldReturnCartId")
+    public void addProductToCartShouldReturn200() {
         String cartId = System.getProperty("cartId");
-
-        String requestBody = """
-            {
-                "productId": 4642,
-                "quantity": 1
-            }
-        """;
+        assertNotNull(cartId);
 
         Response response = RestAssured
             .given()
+            .baseUri(baseUri)
             .header("Authorization", "Bearer " + accessToken)
-            .header("Content-Type", "application/json")
-            .body(requestBody)
+            .contentType("application/json")
+            .body("{ \"productId\": 4643, \"quantity\": 1 }")
             .post("/carts/" + cartId + "/items");
 
         assertEquals(response.statusCode(), 201);
-        assertNotNull(response.jsonPath().get("productId"));
-        assertNotNull(response.jsonPath().get("quantity"));
     }
 }

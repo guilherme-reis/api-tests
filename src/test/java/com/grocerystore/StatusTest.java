@@ -6,16 +6,14 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
-public class StatusTest {
+public class StatusTest extends BaseTest {
 
     @Test
     public void checkStatusReturns200() {
-        RestAssured.baseURI = "https://simple-grocery-store-api.glitch.me";
         Response response = RestAssured
-                .given()
-                .when()
-                .get("/status");
+            .given()
+            .get("/status");
 
-        assertEquals(response.getStatusCode(), 200);
+        assertEquals(response.statusCode(), 200);
     }
 }

@@ -6,12 +6,15 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
-public class StatusTest extends BaseTest {
+public class UnauthorizedAccessTest extends BaseTest {
+
     @Test
-    public void checkStatusReturns200() {
+    public void unauthorizedAccessShouldReturn401() {
         Response response = RestAssured
             .given()
-            .get("/status");
-        assertEquals(response.statusCode(), 200);
+            .baseUri(baseUri)
+            .get("/cart/invalid-id/items");
+
+        assertEquals(response.getStatusCode(), 404);
     }
 }

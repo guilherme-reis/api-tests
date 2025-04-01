@@ -15,5 +15,11 @@ public class InvalidEndpointTest extends BaseTest {
             .get("/invalid-endpoint-here");
 
         assertEquals(response.statusCode(), 404);
+
+        String contentType = response.getContentType();
+        if (contentType != null && contentType.contains("application/json")) {
+            String errorMessage = response.jsonPath().getString("message");
+            assert errorMessage == null || !errorMessage.isBlank();
+        }
     }
 }

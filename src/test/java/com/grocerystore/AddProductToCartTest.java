@@ -4,7 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 public class AddProductToCartTest extends BaseTest {
 
@@ -24,6 +24,11 @@ public class AddProductToCartTest extends BaseTest {
             .body(cartPayload)
             .post("/carts");
 
-        assertEquals(response.getStatusCode(), 201);
+        assertEquals(response.getStatusCode(), 201, "Expected status code 201");
+
+        String cartId = response.jsonPath().getString("cartId");
+        assertNotNull(cartId, "cartId should not be null");
+        assertFalse(cartId.isBlank(), "cartId should not be blank");
+        assertTrue(cartId.matches("^[a-zA-Z0-9]+$"), "cartId should be alphanumeric");
     }
 }

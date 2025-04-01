@@ -68,20 +68,31 @@ public class AdditionalBasicTests extends BaseTest {
     }
     @Test
     public void getAllProductsShouldReturnList() {
-        Response response = given()
-                .get("/products");
-
-        assertEquals(response.statusCode(), 200);
-
+        Response response = given().get("/products");
+    
+        assertEquals(response.statusCode(), 200, "Expected HTTP status 200");
+    
         List<Map<String, Object>> products = response.jsonPath().getList(".");
-        assertNotNull(products);
-        assertTrue(products.size() > 0);
+        assertNotNull(products, "Product list should not be null");
+        assertFalse(products.isEmpty(), "Product list should not be empty");
+    
+        boolean hasValidProduct = false;
+    
+        for (int i = 0; i < products.size(); i++) {
+            Map<String, Object> product = products.get(i);
+            boolean hasId = product.containsKey("id") && product.get("id") != null;
+            boolean hasName = product.containsKey("name") && product.get("name") != null;
+    
+            if (!hasId || !hasName) {
+                System.out.println("Product " + i + " is missing required fields: " +
+                    (!hasId ? "[id] " : "") +
+                    (!hasName ? "[name] " : ""));
+            } else {
+                hasValidProduct = true;
+            }
+        }
+    
+        assertTrue(hasValidProduct, "No product contains both 'id' and 'name' fields.");
     }
+    
 }
-
-
-
-
-    
-
-    

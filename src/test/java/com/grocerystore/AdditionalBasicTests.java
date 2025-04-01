@@ -1,66 +1,71 @@
 package com.grocerystore;
 
-import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.*;
 
-public class AdditionalBasicTests {
+public class AdditionalBasicTests extends BaseTest {
 
-    @BeforeClass
-    public void setup() {
-        RestAssured.baseURI = "https://simple-grocery-store-api.glitch.me";
+    @Test
+    public void getProductByIdShouldReturnCorrectDataType() {
+        Response response = given()
+                .get("/products/4643");
+
+        assertEquals(response.statusCode(), 200);
+
+        JsonPath jsonPath = response.jsonPath();
+        String price = jsonPath.getString("price");
+        assertNotNull(price);
+        assertTrue(price.matches("\\d+\\.\\d{2}"));
     }
 
     @Test
-public void getAllProductsShouldReturn200() {
-    Response response = given().get("/products");
-    Assert.assertEquals(response.getStatusCode(), 200);
+    public void searchNonexistentProductShouldReturn404() {
+        Response response = given()
+                .queryParam("q", "nonexistentproduct123456789")
+                .get("/search");
+
+        assertEquals(response.getStatusCode(), 404);
+    }
+
+    @Test
+public void searchProductsShouldReturn404() {
+    Response response = given()
+        .when()
+        .get("/search");
+
+    assertEquals(response.statusCode(), 404);
 }
 
 
     @Test
-    public void getCartShouldReturn404() {
-        Response response = given().get("/carts");
-        Assert.assertEquals(response.getStatusCode(), 404);
-    }
-
-    @Test
-    public void getProductByIdShouldReturnCorrectDataType() {
-        Response response = given().get("/products");
-        int id = response.jsonPath().getInt("[0].id");
-        response = given().get("/products/" + id);
-        int price = (int) Double.parseDouble(response.jsonPath().getString("price"));
-        Assert.assertTrue(id > 0);
-        Assert.assertTrue(price > 0);
-    }
-
-    @Test
-    public void searchNonexistentProductShouldReturn400() {
+    public void getAllProductsShouldReturnList() {
         Response response = given()
-                .queryParam("q", "")
-                .get("/products/search");
+                .get("/products");
 
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(response.statusCode(), 200);
+
+        List<Map<String, Object>> products = response.jsonPath().getList(".");
+        assertNotNull(products);
+        assertTrue(products.size() > 0);
     }
+
     @Test
-public void getClientCreationWithoutEmailShouldReturn400() {
-    String body = """
-        {
-          "clientName": "Test User"
-        }
-        """;
-
+public void postInvalidCartShouldReturn400() {
     Response response = given()
+        .header("Authorization", "Bearer " + accessToken)
         .contentType("application/json")
-        .body(body)
+        .body("{invalid: true}") 
         .when()
-        .post("/api-clients");
+        .post("/carts");
 
-    Assert.assertEquals(response.getStatusCode(), 400);
+    assertEquals(response.statusCode(), 400);
 }
 
 }

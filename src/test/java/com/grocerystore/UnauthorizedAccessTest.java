@@ -9,12 +9,13 @@ import static org.testng.Assert.assertEquals;
 public class UnauthorizedAccessTest extends BaseTest {
 
     @Test
-    public void unauthorizedAccessShouldReturn401() {
+    public void accessProtectedEndpointWithoutTokenShouldReturn404() {
         Response response = RestAssured
             .given()
-            .baseUri(baseUri)
-            .get("/cart/invalid-id/items");
-
+            .get("/carts");
+    
         assertEquals(response.getStatusCode(), 404);
     }
+    
+    
 }

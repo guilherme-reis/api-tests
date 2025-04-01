@@ -8,23 +8,26 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 public class BaseTest {
-    protected static final String baseUri = "https://simple-grocery-store-api.glitch.me";
+
+    protected static final String BASE_URI = "https://simple-grocery-store-api.glitch.me";
     protected static String accessToken;
 
     @BeforeClass
-    public void generateAccessToken() {
+    public void setup() {
+        RestAssured.baseURI = BASE_URI;
+
         if (accessToken == null) {
             String email = "user" + System.currentTimeMillis() + "@example.com";
+
             Response response = RestAssured
                 .given()
-                .baseUri(baseUri)
                 .contentType("application/json")
                 .body("{\"clientName\": \"api-test\", \"clientEmail\": \"" + email + "\"}")
                 .post("/api-clients");
-            assertEquals(response.statusCode(), 201);
+
+            assertEquals(response.statusCode(), 201, "Expected status 201 when generating token");
             accessToken = response.jsonPath().getString("accessToken");
-            assertNotNull(accessToken);
+            assertNotNull(accessToken, "Access token should not be null");
         }
-        RestAssured.baseURI = baseUri;
     }
 }

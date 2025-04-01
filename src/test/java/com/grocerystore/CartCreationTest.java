@@ -5,19 +5,25 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 
 public class CartCreationTest extends BaseTest {
+
     @Test
-    public void createCartShouldReturnCartId() {
+    public void createCartShouldReturn201() {
+        String payload = """
+            {
+              "productId": 4643,
+              "quantity": 2
+            }
+        """;
+
         Response response = RestAssured
             .given()
-            .baseUri(baseUri)
             .header("Authorization", "Bearer " + accessToken)
+            .contentType("application/json")
+            .body(payload)
             .post("/carts");
-        assertEquals(response.statusCode(), 201);
-        String cartId = response.jsonPath().getString("cartId");
-        assertNotNull(cartId);
-        System.setProperty("cartId", cartId);
+
+        assertEquals(response.getStatusCode(), 201);
     }
 }

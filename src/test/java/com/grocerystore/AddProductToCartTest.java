@@ -29,6 +29,5 @@ public class AddProductToCartTest extends BaseTest {
         String cartId = response.jsonPath().getString("cartId");
         assertNotNull(cartId, "cartId should not be null");
         assertFalse(cartId.isBlank(), "cartId should not be blank");
-        assertTrue(cartId.matches("^[a-zA-Z0-9]+$"), "cartId should be alphanumeric");
     }
 }

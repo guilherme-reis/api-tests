@@ -1,0 +1,58 @@
+guilhermer-mac@Guilhermes-MacBook-Pro api-tests % mvn clean install
+
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.grocerystore:api-tests >---------------------
+[INFO] Building api-tests 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ api-tests ---
+[INFO] Deleting /Users/guilhermer-mac/Documents/GitHub/api-tests/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ api-tests ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /Users/guilhermer-mac/Documents/GitHub/api-tests/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ api-tests ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /Users/guilhermer-mac/Documents/GitHub/api-tests/target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ api-tests ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /Users/guilhermer-mac/Documents/GitHub/api-tests/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ api-tests ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 15 source files to /Users/guilhermer-mac/Documents/GitHub/api-tests/target/test-classes
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ api-tests ---
+[INFO] Using auto detected provider org.apache.maven.surefire.testng.TestNGProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running TestSuite
+Error message: Invalid or missing productId.
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.85 s -- in TestSuite
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.4.1:jar (default-jar) @ api-tests ---
+[INFO] Building jar: /Users/guilhermer-mac/Documents/GitHub/api-tests/target/api-tests-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- install:3.1.2:install (default-install) @ api-tests ---
+[INFO] Installing /Users/guilhermer-mac/Documents/GitHub/api-tests/pom.xml to /Users/guilhermer-mac/.m2/repository/com/grocerystore/api-tests/1.0-SNAPSHOT/api-tests-1.0-SNAPSHOT.pom
+[INFO] Installing /Users/guilhermer-mac/Documents/GitHub/api-tests/target/api-tests-1.0-SNAPSHOT.jar to /Users/guilhermer-mac/.m2/repository/com/grocerystore/api-tests/1.0-SNAPSHOT/api-tests-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  23.310 s
+[INFO] Finished at: 2025-04-02T20:38:46-07:00
+[INFO] ------------------------------------------------------------------------
+guilhermer-mac@Guilhermes-MacBook-Pro api-tests % 
